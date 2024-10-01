@@ -20,7 +20,7 @@ switch (choice) {
         break; 
     default:
         console.log('Invalid choice');
-        break;
+        return;
      
 }
 console.log(`User choice is: ${choice}`);
@@ -38,58 +38,57 @@ switch (computerChoice) {
     case 3: 
         console.log('Scissors');
         break; 
-    default:
-        console.log('Invalid choice');
-        break;
+    
      
 }
 //Decision Structure
 console.info("Decision Structure!!!!");
-let winner;
+
 if (choice === computerChoice){
     console.log("It's a Tie");
-    winner = 'DRAW';
-}   
-else {
-    if( choice ==1 && computerChoice ==2 ||  (computerChoice == 1 && choice ==2)){
-        winner= 2; //paper wins
+   askToContinue();
+   return;
+}  
+let winner;
+    if ((choice === 1 && computerChoice === 3) || // Rock beats Scissors
+        (choice === 2 && computerChoice === 1) || // Paper beats Rock
+        (choice === 3 && computerChoice === 2)) { // Scissors beats Paper
+        winner = 'User';
+    } else {
+        winner = 'Computer';
     }
-    else if( choice ==1 && computerChoice ==3 ||  (computerChoice == 1 && choice ==3)){
-        winner= 1; // rock wins
-    }
-    else if( choice ==2 && computerChoice ==3 ||  (computerChoice == 2 && choice ==3)){
-        winner= 3; // scissors wins
-    }
-
-}
 //who wins?
-if (winner == choice){
+if (winner == 'User') {
     console.log('User wins');
+} else {
+    console.log('Computer wins');
 }
-else{
-    console.log('Computer wins')
-} 
-const readline = require.readline();
-const rl = readline.createInterface({
-    input: process.stdin,
-    output: process.stdout
-});
+askToContinue();
 }
-function askToContinue(){
-console.log('Do you want to continue playing? (Y|N:');
 
-rl.question('',(toContinue)=> {
-    if( toContinue.toUpperCase() =='N'){
-    console.log('Game ends');
-    rl.close();
-    }
-    else{
-        console.log('Starting a new game...')
-        startGame();
+
+function askToContinue(){
+    const readline = require('readline');
+    const rl = readline.createInterface({
+        input: process.stdin,
+        output: process.stdout
+    });
+
+    rl.question('Do you want to continue playing? (Y|N:',(toContinue)=> {
+        if( toContinue.toUpperCase() =='N') {
+        console.log('Game ends');
+        console.log('Thank you for playing. Welcome back next time...!');
+        rl.close();
         }
-});
+        else{
+            console.log('Starting a new game...')
+            rl.close();
+            startGame();
+            }
+    });
 
 }   
+startGame();
      
 
 
